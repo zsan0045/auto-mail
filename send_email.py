@@ -1,9 +1,11 @@
+import os
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from email.utils import formataddr
 import schedule
 import time
+
 
 # 配置信息
 SMTP_SERVER = os.getenv('SMTP_SERVER')
