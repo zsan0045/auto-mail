@@ -24,8 +24,6 @@ jobs:
 
       - name: Run Python script
         env:
-          RECEIVER1: ${{ secrets.RECEIVER1 }}
-          SENDER: ${{ secrets.SENDER }}
-          PASSWORD: ${{ secrets.PASSWORD }}
+          EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}  # 从 GitHub Secrets 中获取密码
         run: |
-          python email_sender.py
+          python send_email.py
