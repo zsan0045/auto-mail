@@ -6,10 +6,10 @@ from email.header import Header
 from email.mime.multipart import MIMEMultipart
 
 # 设置接收人
-receiver1 = os.getenv('RECEIVER1')
+receiver1 = 'zsan45@163.com'
 
 #发件账号
-sender=os.getenv('SENDER')
+sender='2013403390@qq.com'
 
 # 此处填写QQ邮箱授权码
 password = os.getenv('PASSEORD')
