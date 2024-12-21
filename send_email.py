@@ -6,10 +6,10 @@ import schedule
 import time
 
 # 配置信息
-SMTP_SERVER = 'smtp.example.com'  # SMTP 服务器地址，例如 'smtp.gmail.com'
-SMTP_PORT = 587  # SMTP 端口号
-EMAIL_ADDRESS = 'your_email@example.com'  # 发件人邮箱地址
-EMAIL_PASSWORD = 'your_password'  # 发件人邮箱密码或授权码
+SMTP_SERVER = os.getenv('SMTP_SERVER')
+SMTP_PORT = int(os.getenv('SMTP_PORT', 587))  # 默认端口 587
+EMAIL_ADDRESS = os.getenv('EMAIL_ADDRESS')
+EMAIL_PASSWORD = os.getenv('EMAIL_PASSWORD')
 
 # 定义发送邮件的函数
 def send_email(to_address, subject, body):
