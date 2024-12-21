@@ -6,13 +6,13 @@ from email.header import Header
 from email.mime.multipart import MIMEMultipart
 
 # 设置接收人
-receiver1 = os.getenv('receiver1')
+receiver1 = os.getenv('RECEIVER1')
 
 #发件账号
-sender=os.getenv('sender')
+sender=os.getenv('SENDER')
 
 # 此处填写QQ邮箱授权码
-password = os.getenv('password')
+password = os.getenv('PASSEORD')
 
 # 设置主题
 subject = '测试数据'
