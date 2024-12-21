@@ -8,11 +8,15 @@ from email.mime.multipart import MIMEMultipart
 # 设置接收人
 receiver1 = 'zsan45@163.com'
 
-#发件账号
-sender='2013403390@qq.com'
+# 发件账号
+sender = '2013403390@qq.com'
 
-# 此处填写QQ邮箱授权码
-password = os.getenv('PASSEORD')
+# 从环境变量获取密码（QQ邮箱授权码）
+password = os.getenv('EMAIL_PASSWORD')
+
+# 如果密码为空，提示错误并退出
+if not password:
+    raise ValueError("未设置 EMAIL_PASSWORD 环境变量")
 
 # 设置主题
 subject = '测试数据'
@@ -28,7 +32,6 @@ msg.attach(MIMEText('这是菜鸟教程Python 邮件发送测试……', 'plain'
 
 # 登录邮箱并发送邮件
 username = sender
-
 
 smtp_server = 'smtp.qq.com'
 smtp_port = 587
