@@ -1,54 +1,42 @@
 import os
 import smtplib
 from email.mime.text import MIMEText
-from email.mime.multipart import MIMEMultipart
 from email.utils import formataddr
-import schedule
-import time
+from email.header import Header
+from email.mime.multipart import MIMEMultipart
+
+# 设置接收人
+receiver1 = os.getenv('receiver1')
+
+#发件账号
+sender=os.getenv('sender')
+
+# 此处填写QQ邮箱授权码
+password = os.getenv('password')
+
+# 设置主题
+subject = '测试数据'
+
+# 构建邮件内容
+msg = MIMEMultipart()
+msg['From'] = formataddr(["测试邮件33", sender])  # 发送人直接在这里设置
+msg['To'] = formataddr(["zsan", receiver1])
+msg['Subject'] = Header(subject, 'utf-8')
+
+# 邮件正文
+msg.attach(MIMEText('这是菜鸟教程Python 邮件发送测试……', 'plain', 'utf-8'))
+
+# 登录邮箱并发送邮件
+username = sender
 
 
-# 配置信息
-SMTP_SERVER = os.getenv('SMTP_SERVER')
-SMTP_PORT = int(os.getenv('SMTP_PORT', 587))  # 默认端口 587
-EMAIL_ADDRESS = os.getenv('EMAIL_ADDRESS')
-EMAIL_PASSWORD = os.getenv('EMAIL_PASSWORD')
+smtp_server = 'smtp.qq.com'
+smtp_port = 587
+smtp = smtplib.SMTP(smtp_server, smtp_port)
+smtp.starttls()
 
-# 定义发送邮件的函数
-def send_email(to_address, subject, body):
-    try:
-        # 创建邮件
-        msg = MIMEMultipart()
-        msg['From'] = formataddr(("Your Name", EMAIL_ADDRESS))
-        msg['To'] = to_address
-        msg['Subject'] = subject
+smtp.login(username, password)
+smtp.sendmail(username, receiver1, msg.as_string())  # 直接使用登录的用户名发送邮件
+smtp.quit()
 
-        # 邮件正文
-        msg.attach(MIMEText(body, 'plain'))
-
-        # 连接到 SMTP 服务器并发送邮件
-        server = smtplib.SMTP(SMTP_SERVER, SMTP_PORT)
-        server.starttls()
-        server.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
-        server.send_message(msg)
-        server.quit()
-
-        print(f"邮件已成功发送到 {to_address}")
-    except Exception as e:
-        print(f"邮件发送失败: {e}")
-
-# 定时任务示例：每天发送邮件
-def schedule_email():
-    to_address = 'recipient@example.com'  # 收件人邮箱
-    subject = '每日问候'
-    body = '这是自动发送的邮件内容。祝您有美好的一天！'
-
-    send_email(to_address, subject, body)
-
-# 设置定时任务：每天早上9点执行
-schedule.every().day.at("09:00").do(schedule_email)
-
-# 保持脚本运行
-print("开始定时邮件服务...")
-while True:
-    schedule.run_pending()
-    time.sleep(1)
+print("邮件已发送成功")
